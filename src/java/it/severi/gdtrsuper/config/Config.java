@@ -22,7 +22,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @EnableWebMvc
 public class Config extends WebMvcConfigurerAdapter{
     
- 
     @Bean  
     public UrlBasedViewResolver setupViewResolver() {  
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();  
