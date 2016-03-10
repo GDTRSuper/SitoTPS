@@ -25,7 +25,6 @@ public class EventoController {
     @RequestMapping(value="/evento",method=RequestMethod.GET)
     public String index(ModelMap map, @RequestParam(value="id", required=true)int id){
         map.put("evento", db.getEventoById(id));
-        
         return "evento";
     }
 }
