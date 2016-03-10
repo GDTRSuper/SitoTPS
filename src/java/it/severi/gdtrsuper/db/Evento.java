@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,10 +53,24 @@ import javax.xml.bind.annotation.XmlTransient;
     @Basic(optional = false)
     @Column(name = "luogo")
     private String luogo;
+    @Column(name = "descrizione")
+    private String descrizione;
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public String getImmagine() {
+        return immagine;
+    }
+    @Column(name = "Immagine")
+    private String immagine;
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "Eventi_Artisti", joinColumns = {
         @JoinColumn(name = "evento", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "artista", referencedColumnName = "id")})
-    @ManyToMany
+    
     private Collection<Artista> artistiCollection;
     @JoinColumn(name = "creatore", referencedColumnName = "nickname")
     @ManyToOne(optional = false)
@@ -62,14 +78,27 @@ import javax.xml.bind.annotation.XmlTransient;
     @JoinColumn(name = "categoria", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categoria categoria;
-    @OneToMany(mappedBy = "evento")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "evento")
     private Collection<Commento> commentiCollection;
 
+    public int getNumCommenti(){
+        return commentiCollection.size();
+    }
+    
     public Evento() {
     }
 
     public Evento(Integer id) {
         this.id = id;
+    }
+    
+    public float getMedia(){
+        int total=0;
+        for (Commento c : commentiCollection){
+            total += c.getVoto();
+        }
+        if (commentiCollection.size()==0) return 0;
+        return total/commentiCollection.size();
     }
 
     public Evento(Integer id, String titolo, Date data, String luogo) {
