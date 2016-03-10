@@ -9,6 +9,7 @@ import it.severi.gdtrsuper.db.Artista;
 import it.severi.gdtrsuper.db.Categoria;
 import it.severi.gdtrsuper.db.Commento;
 import it.severi.gdtrsuper.db.Evento;
+import it.severi.gdtrsuper.db.Utente;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ public class ManageDatabase {
     public int getMediaVotoPerEvento(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        Query q = session.createSQLQuery("SELECT * FROM Evento where id= ? ").addEntity(Evento.class);
+        Query q = session.createSQLQuery("SELECT * FROM Eventi where id= ? ").addEntity(Evento.class);
         q.setInteger(1, id);
         if (q.list().size() >0){
             Evento e =(Evento)q.list().get(0);
@@ -51,8 +52,8 @@ public class ManageDatabase {
         
         try { 
            tx = session.beginTransaction();
-           Query q = session.createSQLQuery("SELECT * FROM Evento where id= ? ").addEntity(Evento.class);
-           q.setInteger(1, id);
+           Query q = session.createSQLQuery("SELECT * FROM Eventi where id= ? ").addEntity(Evento.class);
+           q.setInteger(0, id);
            if (q.list().size()>0) return (Evento)q.list().get(0);
         } catch (HibernateException e) {
             if (tx != null) {
@@ -69,7 +70,7 @@ public class ManageDatabase {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Artista where id = :id");
+            Query query = session.createQuery("from Artisti where id = :id");
             query.setInteger("id", id);
 
             List persone = query.list();
@@ -112,7 +113,7 @@ public class ManageDatabase {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Artista where nome LIKE '% :nome %'");
+            Query query = session.createQuery("from Artisti where nome LIKE '% :nome %'");
             query.setString(":nome", nome);
 
             List persone = query.list();
@@ -133,13 +134,38 @@ public class ManageDatabase {
 
         return null;
     }
+    
+     public Utente getUtenteByNick(String nome) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("from Utenti where nickname LIKE '% :nome %'");
+            query.setString(0, nome);
+
+            List persone = query.list();
+            if (persone.size() > 0) {
+                return (Utente) persone.get(0);
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return null;
+    }
 
     public List<Artista> getArtisti() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Artista");
+            Query query = session.createQuery("from Artisti");
 
             List persone = query.list();
             List<Artista> ret = new ArrayList<Artista>();
@@ -165,7 +191,7 @@ public class ManageDatabase {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Categoria");
+            Query query = session.createQuery("from Categorie");
 
             List cats = query.list();
             List<Categoria> ret = new ArrayList<Categoria>();
