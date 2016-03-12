@@ -254,6 +254,3 @@ public List<Evento> getEventi(){
         return null;		
       }		      }
 
-    
-
-}
