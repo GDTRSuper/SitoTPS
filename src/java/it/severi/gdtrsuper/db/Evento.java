@@ -60,7 +60,6 @@ import javax.xml.bind.annotation.XmlTransient;
         return descrizione;
     }
 
-    
     public String getImmagine() {
         return immagine;
     }

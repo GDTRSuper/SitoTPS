@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -47,12 +46,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "Utenti_Categorie", joinColumns = {
         @JoinColumn(name = "utente", referencedColumnName = "nickname")}, inverseJoinColumns = {
         @JoinColumn(name = "categoria", referencedColumnName = "id")})
- 
+    @ManyToMany
     private Collection<Categoria> categorieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "creatore")
     private Collection<Evento> eventiCollection;
