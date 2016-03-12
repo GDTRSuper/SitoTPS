@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     private Integer id;
     @Column(name = "nome")
     private String nome;
-    @ManyToMany(mappedBy = "categorieCollection")
+    @ManyToMany(fetch=FetchType.EAGER,mappedBy = "categorieCollection")
     private Collection<Utente> utentiCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    @OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "categoria")
     private Collection<Evento> eventiCollection;
 
     public Categoria() {
