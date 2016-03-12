@@ -13,7 +13,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Sito TPS</title>
+        <title>${cat.nome}</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="./res/css/bootstrap.min.css" rel="stylesheet">
@@ -70,7 +70,7 @@
             <div class="row">
 
                 <div class="col-md-3">
-                    <p class="lead">Shop Name</p>
+                    <p class="lead">${cat.nome}</p>
                     <div class="list-group">
                         <c:forEach items="${cats}" var="cat">
 
@@ -79,43 +79,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-10">
 
-                    <div class="row carousel-holder">
-
-                        <div class="col-md-12">
-                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                     <c:forEach items="${ultimiEventi}" var="evento">
-                                         <li data-target="#carousel-example-generic" data-slide-to="0" class="<c:if test="${evento.id == 1}">active</c:if>"></li>
-                                        
-                        </c:forEach>
-                                    
-                                    
-                                     
-                                </ol>
-                                <div class="carousel-inner">
-                                    <c:forEach items="${ultimiEventi}" var="evento">
-                                        <div class="item <c:if test="${evento.id == 1}">active</c:if> ">
-                               <img class="slide-image" width="800" height="300" src="${evento.immagine}" alt="">
-                                    </div>
-                        </c:forEach>
-                                    
-                                    
-                                </div>
-                                
-                                
-                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
+                 
 
                     <div class="row">
                         <c:forEach items="${ultimiEventi}" var="evento">
@@ -162,29 +128,8 @@
             <!-- Footer -->
             <footer>
                 <div class="row">
-                    <c:forEach items="${ultimiEventi}" var="evento">
-                          <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="${evento.getImmagine()}" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">${evento.creatore.nome}</h4>
-                                <h4><a href="#">${evento.titolo}</a></h4>
-                                <h5>${evento.categoria.nome}</h5>
-                                <p>${evento.descrizione}</p>
-                            </div>
-                            <div class="ratings">
-                                
-                                <p class="pull-right"> ${evento.getNumCommenti()} commenti</p>
-                                <p>
-                                    <c:forEach begin="1" end="${evento.getMedia()}">
-                                    <span class="glyphicon glyphicon-star"></span> </c:forEach>
-                                    <c:forEach begin="${evento.getMedia()}" end="4">
-                                    <span  class="half glyphicon glyphicon-star-empty"></span> </c:forEach>
-                                </p>
-                            </div>
-                        </div>
-                    </c:forEach>
-                  
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; Your Website 2014</p>
                     </div>
                 </div>
             </footer>
