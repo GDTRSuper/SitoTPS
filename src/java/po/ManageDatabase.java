@@ -228,5 +228,32 @@ public List<Evento> getEventi(){
 
         return null;
     }
+    
+    
+    public Categoria getCategoriaByID(int id) {		
+         Session session = HibernateUtil.getSessionFactory().openSession();		
+         Transaction tx = null;		
+         try {		
+             tx = session.beginTransaction();		
+             Query query = session.createQuery("from Categoria where id = :id");		
+             query.setInteger("id", id);		
+ 		
+             List cats = query.list();		
+             if (cats.size() > 0) {		
+                 return (Categoria) cats.get(0);		
+             } 		
+        } catch (HibernateException e) {		
+             if (tx != null) {		
+                 tx.rollback();		
+             }		
+            e.printStackTrace();		
+        } finally {		
+            session.close();		
+        }		
+	
+        return null;		
+      }		      }
+
+    
 
 }
